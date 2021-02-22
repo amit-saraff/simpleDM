@@ -1,16 +1,17 @@
+
 # Simple Dungeon Master
 this is a script in node.js which implements and bundles the [mixpanel node.js  library](https://github.com/mixpanel/mixpanel-node) in order to easily send customized event data to any mixpanel project.
 
 # usage
 
-clone the repo. 
-customize the data in `index.js` 
-run as:
+ 1. clone the repo.  
+ 2. customize the `config` object in `index.js`  
+ 3. run as:
 ```
 node index.js
 ```
-see the data in mixpanel
-there's a local copy of the data (`data.json`) in the same directory.
+4. see data in mixpanel
+5. find a local copy of the data (`data.json`) in the same directory as the script
 
 
 # customizing the data
