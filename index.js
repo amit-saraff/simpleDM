@@ -22,11 +22,14 @@ const config = {
     numberOfUsers: 1,
     eventNames: ["checkout", "add to cart", "view item", "add to favorites"],
     properties: {
-        /* this is where the magic happens...
+        /* 
+        
+        this is where the magic happens...
         each key is a property name; the "value" is an array of possible property values
         when run, the script will choose random values for each property
         you can also use [].range as shown below
         you can also reference functions which return custom values
+        
         */
         affiliate: ["Amazon", "Target", "Wayfair", "Alibaba", "eBay", "Flipkart", "Walmart", "BestBuy", "Costco", "Target"],
         coupon: [false, "couponFoo", false, "couponBar", false, "couponBaz", false, "couponQux", false, "couponMux"],
@@ -39,9 +42,9 @@ const config = {
     }
 }
 
-const now = Date.now();
-const dayInMs = 8.64e+7
-
+//EXAMPLE: using a function for custom data
+//makeProducts() returns an array of nested objects of random size [{},{},{}]
+//it gets called each time an event is created for the fake dataset
 function makeProducts() {
     let categories = ["Device Accessories", "eBooks", "Automotive & Powersports", "Baby Products (excluding apparel)", "Beauty", "Books", "Camera & Photo", "Cell Phones & Accessories", "Collectible Coins", "Consumer Electronics", "Entertainment Collectibles", "Fine Art", "Grocery & Gourmet Food", "Health & Personal Care", "Home & Garden", "Independent Design", "Industrial & Scientific", "Accessories", "Major Appliances", "Music", "Musical Instruments", "Office Products", "Outdoors", "Personal Computers", "Pet Supplies", "Software", "Sports", "Sports Collectibles", "Tools & Home Improvement", "Toys & Games", "Video, DVD & Blu-ray", "Video Games", "Watches"]
     let slugs = ['/sale/', '/featured/', '/home/', '/search/', '/wishlist/', '/']
@@ -78,7 +81,12 @@ function makeProducts() {
 }
 
 
-//methods
+
+const now = Date.now();
+const dayInMs = 8.64e+7;
+
+
+//AK's built-in helper methods
 function rangeArray(a, b, step = 1) {
     step = !step ? 1 : step;
     b = b / step;
@@ -109,6 +117,12 @@ function randomNum(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function removeSpaces(stringy) {
+	let noSpaces = stringy.split(' ').join('');
+	return noSpaces;
+
 }
 
 function makeEvent(eventNames, currentUser, earliestTime, customProps) {

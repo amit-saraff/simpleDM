@@ -36,7 +36,7 @@ a couple of parameters are required here:
 | `numberOfUsers` | how many users to simulate |
 | `eventNames` | a list of possible event names to choose |
 
-most interesting is the `properties` object; it is not required but allows for more interactions recipies.
+most interesting is the `properties` object; it is not required but allows for more unique recipies.
 
 the `properties` object will accept keys with a value of an array `[]` or function `()=>{}`
 
