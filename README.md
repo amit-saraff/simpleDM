@@ -1,6 +1,17 @@
 # Simple Dungeon Master
 this is a script in node.js which implements and bundles the [mixpanel node.js  library](https://github.com/mixpanel/mixpanel-node) in order to easily send customized event data to any mixpanel project.
 
+# usage
+
+clone the repo. 
+customize the data in `index.js` 
+run as:
+```
+node index.js
+```
+see the data in mixpanel
+there's a local copy of the data (`data.json`) in the same directory.
+
 
 # customizing the data
 
@@ -57,15 +68,6 @@ function uuid() {
 ```
 
 function references placed in the `properties` object makes it possible to create more complex, nested property structures for event data. see `makeProducts`  for an example in the code.
-
-
-# Usage
-
-```
-node index.js 
-```
-
-You'll find a file `data.json` was created that has a copy of all the data
 
 # But... Why?
 because sometimes you just need fake events in mixpanel, quickly
