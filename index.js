@@ -19,7 +19,7 @@ const config = {
     secret: "{{PROJECT SECRET}}",
     lengthInDays: 100,
     numberOfEvents: 10,
-    numberOfUsers: 1,
+    numberOfUsers: 1, //should be less than or equal to numberOfEvents
     eventNames: ["checkout", "add to cart", "view item", "add to favorites"],
     properties: {
         /* 
@@ -45,6 +45,7 @@ const config = {
 //EXAMPLE: using a function for custom data
 //makeProducts() returns an array of nested objects of random size [{},{},{}]
 //it gets called each time an event is created for the fake dataset
+//you can delete this method; it's used for 'cart' in the example config
 function makeProducts() {
     let categories = ["Device Accessories", "eBooks", "Automotive & Powersports", "Baby Products (excluding apparel)", "Beauty", "Books", "Camera & Photo", "Cell Phones & Accessories", "Collectible Coins", "Consumer Electronics", "Entertainment Collectibles", "Fine Art", "Grocery & Gourmet Food", "Health & Personal Care", "Home & Garden", "Independent Design", "Industrial & Scientific", "Accessories", "Major Appliances", "Music", "Musical Instruments", "Office Products", "Outdoors", "Personal Computers", "Pet Supplies", "Software", "Sports", "Sports Collectibles", "Tools & Home Improvement", "Toys & Games", "Video, DVD & Blu-ray", "Video Games", "Watches"]
     let slugs = ['/sale/', '/featured/', '/home/', '/search/', '/wishlist/', '/']
@@ -82,11 +83,12 @@ function makeProducts() {
 
 
 
+//built-in helpers
+//don't touch these
+
 const now = Date.now();
 const dayInMs = 8.64e+7;
 
-
-//AK's built-in helper methods
 function rangeArray(a, b, step = 1) {
     step = !step ? 1 : step;
     b = b / step;
@@ -172,6 +174,11 @@ function main(config) {
         eventNames,
         properties
     } = config
+
+    //make sure we have more events than users
+    if (numberOfUsers > numberOfEvents) {
+    	throw new Error(`you specified ${numberOfEvents} over ${numberOfUsers}...\nthis is impossible; please make sure numberOfEvents is greater than numberOfUsers`)
+    }
 
     let finalData = []
     let eventsPerUser = Math.floor(numberOfEvents / numberOfUsers)
