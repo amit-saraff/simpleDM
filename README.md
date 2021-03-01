@@ -25,9 +25,10 @@ at the heart of this script is the config object, which you can customize to sui
     numberOfEvents: 10,
     numberOfUsers: 1,
     eventNames: [],
-    properties: { ... }
+    eventProperties: { ... },
+    userProperties: { ... }
 ```
-a couple of parameters are required here:
+a couple of parameters are **required**:
 |param|dfn |
 |--|--|
 |`token`  | your mixpanel project token |
@@ -37,23 +38,41 @@ a couple of parameters are required here:
 | `numberOfUsers` | how many users to simulate |
 | `eventNames` | a list of possible event names to choose |
 
-most interesting is the `properties` object; it is not required but allows for more unique recipies.
+note that you can also pass in your token/secret as command line params:
+```
+node index.js project_token project_secret
+```
+# props
+the most interesting part of this script are the `properties` objects:
+```
+eventProperties: {...},
+userProperties: {...}
+```
+they are not required, but they allow for more unique recipes.
 
-the `properties` object will accept keys with a value of an array `[]` or function `()=>{}`
+these `properties` objects will accept keys with a value of an array `[]` or function `()=>{}`
 
 if the value is an array `[]`, each event will have a property with the same key name and a random value:
 
 ```
- properties: {       
+ eventProperties: {       
 //one of these values will be chosen at random for each event
         currency: ["BTC", "ETH", "LTC", "XMR", "EOS"], 
+}
+```
+
+similarly: 
+ ```
+ userProperties: {       
+//one of these values will be chosen at random for each user profile
+        favorite philosopher: ["Plato", "Hume", "Nietzsche", "Socrates"], 
 }
 ```
 
 if the value is a function `()=>{}` , the script will call that function as it generates each event. *that* function's `return` value will be placed on each event:
 
 ```
- properties: {       
+ eventProperties: {       
 //a random uuid will be creatred for each event
         randomId: uuid, 
 }
@@ -68,7 +87,7 @@ function uuid() {
 }
 ```
 
-function references placed in the `properties` object makes it possible to create more complex, nested property structures for event data. see `makeProducts`  for an example in the code.
+function references placed in either `properties` object makes it possible to create more complex, nested property structures for event data. see `makeProducts`  for an example in the code.
 
 # But... Why?
 because sometimes you just need fake events in mixpanel, quickly
