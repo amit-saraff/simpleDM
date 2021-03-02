@@ -22,13 +22,34 @@ Array.prototype.range = rangeArray
 Array.prototype.pickOne = randomArray
 /* beautify ignore:end */
 
+console.log(`Let's do this!!!\n`)
 
-//config
-//THIS IS WHAT YOU EDIT
+//if the user specifics an separate config file
+const suppliedConfig = args[0];
+let externalConfig = null
+if (suppliedConfig) {
+	console.log(`using ${suppliedConfig} for data\n`)
+	externalConfig = require(`./${suppliedConfig}`)
+	externalConfig.token = Boolean(args[1]) ? args[1] : externalConfig.token;
+	externalConfig.secret = Boolean(args[2]) ? args[2] : externalConfig.secret;
+}
+
+
+/*
+
+config
+THIS IS WHAT YOU EDIT
+note, you can ALSO write this configuration in another file and run as:
+	
+	node index.js myConfigFile.js
+
+see configExample.js for... an example :)
+
+*/
 const config = {
     // token & secret; you can pass these as command line params too.
-    token: args[0] || "{{PROJECT TOKEN}}",
-    secret: args[1] || "{{PROJECT SECRET}}",
+    token: "{{PROJECT TOKEN}}",
+    secret: "{{PROJECT SECRET}}",
     
     verbose: true, 				//log lots of messages to the console (SLOW)
     lengthInDays: 30, 			//how many days worth of data
@@ -41,7 +62,6 @@ const config = {
     
     eventProperties: {
         /*         
-        this is where the magic happens...
         each key is a property name; the "value" is an array of possible property values
         when run, the script will choose random values for each property
         you can also use [].range as shown below
@@ -98,7 +118,8 @@ const config = {
     }
 }
 
-/* example of using function to generate event props
+/* 
+example of using function to generate event props
 makeProducts() returns an array of nested objects of random size [{},{},{}]
 it gets called each time an event is created for the fake dataset
 you can delete this method; it's used for 'cart' in the example config
@@ -335,6 +356,7 @@ async function main(config) {
         let userProps = makeUserProfileProps(userProperties);
 
         try {
+            
             // mixpanel.people.set(currentUser, userProps, {
             //     $ignore_time: true,
             //     $ip: fakeIp()
@@ -369,9 +391,11 @@ async function main(config) {
 
             try {
                 let groupProfile = makeGroupProfileProps(groupProperties[groupKey])
+
                     // mixpanel.groups.set(groupKey, i, groupProfile, {
                     //     $ignore_time: true
                     // })
+                    
                 await groupPropPromise(groupKey, i, groupProfile, {
                     $ignore_time: true
                 })
@@ -409,4 +433,4 @@ async function main(config) {
 }
 
 //that's all folks :)
-main(config)
+main(externalConfig || config)
