@@ -89,5 +89,49 @@ function uuid() {
 
 function references placed in either `properties` object makes it possible to create more complex, nested property structures for event data. see `makeProducts`  for an example in the code.
 
-# But... Why?
+# group profiles
+this script can also generate groups + group profiles with little effort. in order for this to work properly, you must first **[create group keys](https://help.mixpanel.com/hc/en-us/articles/360025333632-Group-Analytics#implementation)** in your mixpanel project.
+
+the `groupKeys` config option accepts an array of arrays `[[],[],[]]
+` where each child `[]` pair represents a `groupKey` and a number of profiles to create for that group:
+
+```
+    groupKeys: [
+        ['company_id', 500],
+        ['document_id', 3000],
+        ['conversation_id', 5000]
+    ],
+```
+
+would match:
+
+![enter image description here](https://aktunes.neocities.org/screenshots/groupKeys.png)
+
+in the mixpanel UI.
+
+to turn group analytics off, just make `groupKeys` and empty array
+```
+groupKeys: []
+```
+
+group profile properties work similarly to `eventProperties` and `userProperties` and expect arrays `[]` or function refernece. Note that the `groupProperties` object should contain keys which match the `groupKeys` defined above:
+
+```
+ groupProperties: {
+        company_id: {
+            $name: ['company FOO', 'company BAR', 'company BAZ'],
+            "# of employees": [].range(3, 10000)
+        },
+        document_id: {
+            $name: ['document FOO', 'document BAR', 'document BAZ'],
+            "# of collaborators": [].range(1, 50)
+        },
+        conversation_id: {
+            $name: ['conversation FOO', 'conversation BAR', 'conversation BAZ'],
+            "# of messages": [].range(300, 500000)
+        }
+    }
+```
+
+# but... why?
 because sometimes you just need fake events in mixpanel, quickly
