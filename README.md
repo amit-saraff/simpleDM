@@ -1,10 +1,16 @@
 
+
 # Simple Dungeon Master
 this is a script in node.js which implements and bundles the [mixpanel node.js  library](https://github.com/mixpanel/mixpanel-node) in order to easily send customized event data to any mixpanel project.
 
+therefore, you must have [node.js](https://nodejs.org/en/download/) installed on your computer to use this script
+
 # usage
 
- 1. clone the repo.  
+ 1. clone the repo.
+```
+git clone https://github.com/ak--47/simpleDM.git
+```  
  2. customize the `config` object in `index.js`  (or use an **[external configuration file](#external-configuration-file)** 👍)
  3. run as:
 ```
