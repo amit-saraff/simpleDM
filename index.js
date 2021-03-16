@@ -35,9 +35,11 @@ const suppliedConfig = args[0];
 let externalConfig = null
 if (suppliedConfig) {
     console.log(`using ${suppliedConfig} for data\n`)
-    externalConfig = require(`./${suppliedConfig}`)
+    externalConfig = require(path.resolve(suppliedConfig));
     externalConfig.token = Boolean(args[1]) ? args[1] : externalConfig.token;
     externalConfig.secret = Boolean(args[2]) ? args[2] : externalConfig.secret;
+} else {
+    console.log(`using index.js for config`)
 }
 
 
@@ -335,7 +337,7 @@ async function main(config) {
 
     console.log(`Building ${numberOfUsers} unique user profiles\n`)
 
-    for (let i = 1; i < numberOfUsers+1; i++) {
+    for (let i = 1; i < numberOfUsers + 1; i++) {
         showProgress('users', i)
         let currentUser = uuid();
         let userProps = makeUserProfileProps(userProperties);
