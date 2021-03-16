@@ -15,6 +15,7 @@ const config = {
     // token & secret; you can pass these as command line params too.
     token: "{{PROJECT TOKEN}}",
     secret: "{{PROJECT SECRET}}",
+    seed: "hey there!",          //seed the randomness engine to get reproducible results
     
     verbose: false, 			//log lots of messages to the console (SLOW)
     lengthInDays: 7, 			//how many days worth of data
