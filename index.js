@@ -175,7 +175,9 @@ function makeEvent(eventNames, currentUser, earliestTime, customProps, groupKeys
         properties: {
             distinct_id: currentUser,
             time: randomNum(earliestTime, now),
-            ip: fakeIp()
+            ip: fakeIp(),
+            "$source": "simpleDM (by AK)",
+            "$mp_lib": "simpleDM"
         }
     }
 
