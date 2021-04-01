@@ -164,11 +164,11 @@ function randomNum(min, max) {
     });
 }
 
-function removeSpaces(stringy) {
-    let noSpaces = stringy.split(' ').join('');
-    return noSpaces;
+// function removeSpaces(stringy) {
+//     let noSpaces = stringy.split(' ').join('');
+//     return noSpaces;
 
-}
+// }
 
 function makeEvent(eventNames, currentUser, earliestTime, customProps, groupKeys) {
     let event = {
@@ -177,8 +177,7 @@ function makeEvent(eventNames, currentUser, earliestTime, customProps, groupKeys
             distinct_id: currentUser,
             time: randomNum(earliestTime, now),
             ip: fakeIp(),
-            "$source": "simpleDM (by AK)",
-            "$mp_lib": "simpleDM"
+            "$source": "simpleDM (by AK)"
         }
     }
 
@@ -363,10 +362,10 @@ async function main(config) {
             console.log(e)
         }
 
-        let eventsForThisUser = eventsPerUser + chance.integer({
+        let eventsForThisUser = Math.abs(eventsPerUser + chance.integer({
             min: -10,
             max: 10
-        })
+        }))
 
         for (let j = 0; j < eventsForThisUser; j++) {
             finalEventsData.push(makeEvent(eventNames, currentUser, earliestTime, eventProperties, groupKeys));

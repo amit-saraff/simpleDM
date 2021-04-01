@@ -22,7 +22,7 @@ const config = {
     numberOfEvents: 50000, 		//how many events
     numberOfUsers: 100, 		//how many users
     saveCopyOfData: false, 		//save a local copy of eventData?
-    maxConncurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
+    maxConcurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
     
     //events will be chosen at random
     eventNames: ["checkout", "add to cart", "view item", "add to favorites"],
