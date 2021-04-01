@@ -27,7 +27,7 @@ Array.prototype.range = rangeArray
 Array.prototype.pickOne = randomArray
 /* beautify ignore:end */
 
-console.log(`Here we go!!!\n`)
+console.log(`Simulation Started\n`)
 
 //if the user specifics an separate config file
 //TODO support dragged in paths
@@ -64,6 +64,7 @@ const config = {
     numberOfEvents: 10000, //how many events
     numberOfUsers: 100, //how many users
     saveCopyOfData: false, //save a local copy of eventData?
+    maxConcurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
 
     //events will be chosen at random
     eventNames: ["checkout", "add to cart", "view item", "add to favorites"],
@@ -302,6 +303,8 @@ async function main(config) {
     const chance = new Chance(seed);
     global.chance = chance;
 
+    let maxConcurrentRequets = config.maxConcurrent || 5;
+
     //promisfying people.set()
     function peoplePropPromise(uuid, props, config = null) {
         return new Promise(function(resolve, reject) {
@@ -409,10 +412,8 @@ async function main(config) {
     //prefer promise method
     //mixpanel.import_batch(finalEventsData) 
     const importerEvents = util.promisify(mixpanel.import_batch);
-    mixpanel.set_config({
-        debug: true
-    });
-    importerEvents(finalEventsData).then(() => {
+    mixpanel.set_config({ debug: true });
+    importerEvents(finalEventsData, {max_concurrent_requests: maxConcurrentRequets}).then(() => {
         console.log('\nevent data set!\n')
     }).then(() => {
         if (config.saveCopyOfData) {
@@ -424,7 +425,7 @@ async function main(config) {
         }
 
     }).then(() => {
-        console.log('\nall finished\n')
+        console.log('\nall data sent\nNOTE: it may take up to 10 minutes for the data to appear in mixpanel\n\n')
     })
 
     return finalEventsData
