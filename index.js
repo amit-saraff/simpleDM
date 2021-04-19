@@ -363,8 +363,8 @@ async function main(config) {
         }
 
         let eventsForThisUser = Math.abs(eventsPerUser + chance.integer({
-            min: -10,
-            max: 10
+            min: -20,
+            max: 20
         }))
 
         for (let j = 0; j < eventsForThisUser; j++) {
