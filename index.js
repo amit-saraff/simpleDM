@@ -81,7 +81,7 @@ const config = {
         isFeaturedItem: [true, false],
         value: [].range(2, 1000),
         revenue: [].range(5, 500),
-        cart_id: uuid
+        cart_id: [].range(1, 999999)
     },
     userProperties: {
         /*
@@ -147,9 +147,6 @@ function randomArray() {
     return choice
 }
 
-function uuid() {
-    return chance.guid();
-}
 
 function fakeIp() {
     var ip = chance.ip();
@@ -299,7 +296,13 @@ async function main(config) {
     }
 
     const chance = new Chance(seed);
+    const userIdChance = new Chance(seed);
     global.chance = chance;
+    
+    //the function which generates $distinct_id
+    function uuid() {
+        return userIdChance.guid();
+    }
 
     let maxConcurrentRequets = config.maxConcurrent || 5;
 
