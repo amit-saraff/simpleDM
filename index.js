@@ -54,10 +54,10 @@ const config = {
     // token & secret; you can pass these as command line params too.
     token: "4c7174372e1c0fba43e49a9a1227be9e",
     secret: "5ba9232313bbc3ba148d1a5894b9d290",
-    seed: "foo bar baz fum",
+    seed: "foo bar baz fum 3",
     verbose: false, //log lots of messages to the console (SLOW)
     lengthInDays: 1, //how many days worth of data
-    numberOfEvents: 1000, //how many events
+    numberOfEvents: 50000, //how many events
     numberOfUsers: 1, //how many users
     saveCopyOfData: false, //save a local copy of eventData?
     maxConcurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
@@ -126,9 +126,7 @@ const config = {
 
 //built-in helpers
 //don't touch these
-const now = Date.now();
 const dayInMs = 8.64e+7;
-
 
 function rangeArray(a, b, step = 1) {
     step = !step ? 1 : step;
@@ -157,18 +155,12 @@ function randomNum(min, max) {
     });
 }
 
-// function removeSpaces(stringy) {
-//     let noSpaces = stringy.split(' ').join('');
-//     return noSpaces;
-
-// }
-
-function makeEvent(eventNames, currentUser, earliestTime, customProps, groupKeys) {
+function makeEvent(eventNames, currentUser, earliestTime, latestTime, customProps, groupKeys) {
     let event = {
         event: eventNames.pickOne(),
         properties: {
             distinct_id: currentUser,
-            time: randomNum(earliestTime, now),
+            time: randomNum(earliestTime, latestTime,),
             ip: fakeIp(),
             "$source": "simpleDM (by AK)"
         }
@@ -340,6 +332,7 @@ async function main(config) {
     // let earliestTime = now - (lengthInDays * dayInMs);
     let startOfToday = new Date(new Date().setHours(0, 0, 0, 0))
     let earliestTime = startOfToday.valueOf()
+    let latestTime = Date.now()
     console.log(`Building ${numberOfUsers} unique user profiles\n`)
 
     for (let i = 1; i < numberOfUsers + 1; i++) {
@@ -364,7 +357,7 @@ async function main(config) {
         }
 
         for (let j = 0; j < eventsPerUser; j++) {
-            finalEventsData.push(makeEvent(eventNames, currentUser, earliestTime, eventProperties, groupKeys));
+            finalEventsData.push(makeEvent(eventNames, currentUser, earliestTime, latestTime, eventProperties, groupKeys));
         }
     }
 
