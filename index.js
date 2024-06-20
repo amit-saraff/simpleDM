@@ -54,10 +54,10 @@ const config = {
     // token & secret; you can pass these as command line params too.
     token: "4c7174372e1c0fba43e49a9a1227be9e",
     secret: "5ba9232313bbc3ba148d1a5894b9d290",
-    seed: "foo bar baz fum 3",
+    seed: "foo bar baz fum 09/13 3",
     verbose: false, //log lots of messages to the console (SLOW)
     lengthInDays: 1, //how many days worth of data
-    numberOfEvents: 50000, //how many events
+    numberOfEvents: 10000, //how many events
     numberOfUsers: 1, //how many users
     saveCopyOfData: false, //save a local copy of eventData?
     maxConcurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
@@ -144,7 +144,7 @@ function randomArray() {
 
 
 function fakeIp() {
-    var ip = chance.ip();
+    var ip = '153.208.102.234'; // chance.ip();
     return ip
 }
 
@@ -162,9 +162,26 @@ function makeEvent(eventNames, currentUser, earliestTime, latestTime, customProp
             distinct_id: currentUser,
             time: randomNum(earliestTime, latestTime,),
             ip: fakeIp(),
-            "$source": "simpleDM (by AK)"
+            "$source": "simpleDM (by AK)",
+            "mp_lib": "android",
+            "$device_id": "91304156-cafc-4673-a237-623d1129c801",
+            "$city": "Emmendingen",
+            "$region": "Baden-Württemberg",
+            "mp_country_code": "Germany",
+            "ip": 0,
+            "$app_version_string": "2.23.1",
+            "$brand": "samsung",
+            "$model": "SM-A528B",
+            "$os": "Android",
+            "$screen_height": 2177,
+            "$screen_width": 1080,
+            "company_id": "company_id_3919"
         }
     }
+
+                // "screen_path": "https://app.mooder.work/external?link=https://shp.ee/utnh7dp&redirect=https://shp.ee/utnh7dp",
+            // "app_env": "staging",
+            // "screen_class": "externalLink",
 
     //iterate through custom properties
     for (const key in customProps) {
