@@ -56,8 +56,8 @@ const config = {
     secret: "5ba9232313bbc3ba148d1a5894b9d290",
     seed: "foo bar baz fum 09/13 3",
     verbose: false, //log lots of messages to the console (SLOW)
-    lengthInDays: 1, //how many days worth of data
-    numberOfEvents: 10000, //how many events
+    lengthInDays: 7, //how many days worth of data
+    numberOfEvents: 100000, //how many events
     numberOfUsers: 1, //how many users
     saveCopyOfData: false, //save a local copy of eventData?
     maxConcurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
@@ -346,9 +346,9 @@ async function main(config) {
     let finalEventsData = []
 
     let eventsPerUser = Math.floor(numberOfEvents / numberOfUsers);
-    // let earliestTime = now - (lengthInDays * dayInMs);
+    let earliestTime =  Date.now() - (lengthInDays * dayInMs);
     let startOfToday = new Date(new Date().setHours(0, 0, 0, 0))
-    let earliestTime = startOfToday.valueOf()
+    // let earliestTime = startOfToday.valueOf()
     let latestTime = Date.now()
     console.log(`Building ${numberOfUsers} unique user profiles\n`)
 
