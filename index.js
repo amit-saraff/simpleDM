@@ -52,13 +52,13 @@ see configExample.js for... an example :)
 */
 const config = {
     // token & secret; you can pass these as command line params too.
-    token: "4c7174372e1c0fba43e49a9a1227be9e",
-    secret: "5ba9232313bbc3ba148d1a5894b9d290",
-    seed: "foo bar baz fum 09/13 3",
+    token: "fb9f4a0fbbadc20bf74ab872dd1b7805", // "4c7174372e1c0fba43e49a9a1227be9e"
+    secret: "d96b870febb377850beb2184ef8e4003", // "5ba9232313bbc3ba148d1a5894b9d290"
+    seed: "foo bar baz fum 10/10",
     verbose: false, //log lots of messages to the console (SLOW)
-    lengthInDays: 7, //how many days worth of data
-    numberOfEvents: 100000, //how many events
-    numberOfUsers: 1, //how many users
+    lengthInDays: 30, //how many days worth of data
+    numberOfEvents: 1000000, //how many events
+    numberOfUsers: 5, //how many users
     saveCopyOfData: false, //save a local copy of eventData?
     maxConcurrent: 25,         //make this smaller (like 5) if you're on a slow network connection
 
